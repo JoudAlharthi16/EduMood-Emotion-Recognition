@@ -1,3 +1,16 @@
-This software is licensed for non-commercial use only.
-If you wish to use this software for commercial purposes, you must obtain a commercial license.
-Contact manishsit13@gmail.com for details.
+EduMood – Students Emotion Recognition System
+
+This project is developed solely for academic and research purposes as part of the 
+"Design of Artificial Intelligence Systems" course. 
+
+Some components in this project build conceptually on open-source educational 
+resources, including:
+- DeepFace (Serengil et al.)
+- Classroom Emotion Dashboard demo (Kevin Aguirre)
+- Public academic examples for facial-emotion recognition
+
+All reused elements are utilized strictly for learning, experimentation, and 
+non-commercial research.
+
+This project is not intended for commercial deployment and should not be used, 
+distributed, or modified for commercial purposes.

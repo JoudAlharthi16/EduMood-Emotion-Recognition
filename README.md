@@ -1,64 +1,184 @@
-# Facial-Emotion-Recognition-using-OpenCV-and-Deepface
-This project implements real-time facial emotion detection using the `deepface` library and OpenCV. It captures video from the webcam, detects faces, and predicts the emotions associated with each face. The emotion labels are displayed on the frames in real-time.
-This is probably the shortest code to implement realtime emotion monitoring.
-- Give this repository a ⭐ if you liked it, since it took me time to understand and implement this
-- Made with ❤️ by [Manish Tiwari](https://github.com/manish-9245)
+#  EduMood – Students Emotion Recognition System
 
-## Dependencies
+### *AI-Based Real-Time Classroom Emotion Analytics*
 
-- [deepface](https://github.com/serengil/deepface): A deep learning facial analysis library that provides pre-trained models for facial emotion detection. It relies on TensorFlow for the underlying deep learning operations.
-- [OpenCV](https://opencv.org/): An open-source computer vision library used for image and video processing.
+---
 
-## Usage
-### Initial steps:
-- Git clone this repository Run: `git clone https://github.com/manish-9245/Facial-Emotion-Recognition-using-OpenCV-and-Deepface.git`
-- Run: `cd Facial-Emotion-Recognition-using-OpenCV-and-Deepface`
-1. Install the required dependencies:
-   - You can use `pip install -r requirements.txt`
-   - Or you can install dependencies individually:
-      - `pip install deepface`
-      - `pip install tf_keras`
-      - `pip install opencv-python`
+## 📌 1. Overview
 
-2. Download the Haar cascade XML file for face detection:
-   - Visit the [OpenCV GitHub repository](https://github.com/opencv/opencv/tree/master/data/haarcascades) and download the `haarcascade_frontalface_default.xml` file.
+**EduMood** is an AI-powered system designed to recognize and analyze students’ facial emotions in real time using a webcam.
+The system captures video frames, detects faces, predicts emotions, stores aggregated session statistics, and visualizes the results through an interactive Streamlit dashboard.
 
-3. Run the code:
-   - Execute the Python script.
-   - The webcam will open, and real-time facial emotion detection will start.
-   - Emotion labels will be displayed on the frames around detected faces.
+This project is developed as part of the course:
+**CSC — Design of Artificial Intelligence Systems**,
+following the full **AI lifecycle** methodology.
 
-## Approach
+---
 
-1. Import the necessary libraries: `cv2` for video capture and image processing, and `deepface` for the emotion detection model.
+## 📌 2. System Purpose
 
-2. Load the Haar cascade classifier XML file for face detection using `cv2.CascadeClassifier()`.
+EduMood serves as an educational AI prototype that demonstrates:
 
-3. Start capturing video from the default webcam using `cv2.VideoCapture()`.
+* Real-time facial emotion recognition
+* Classroom-level emotional analytics
+* Data aggregation & visualization
+* Integration of pre-trained models into a complete AI system
 
-4. Enter a continuous loop to process each frame of the captured video.
+The system builds a structured analytic pipeline similar to Kevin Aguirre’s project, but adapted to our own architecture and academic requirements.
 
-5. Convert each frame to grayscale using `cv2.cvtColor()`.
+---
 
-6. Detect faces in the grayscale frame using `face_cascade.detectMultiScale()`.
+## 📌 3. High-Level System Architecture
 
-7. For each detected face, extract the face ROI (Region of Interest).
+```
+┌────────────────────┐
+│     Webcam Input    │
+└─────────┬──────────┘
+          │ Frames
+          ▼
+┌────────────────────┐
+│  EduMoodRecognizer  │
+│ ─ Face detection    │
+│ ─ Emotion inference │
+│ ─ Frame sampling    │
+└─────────┬──────────┘
+          │ Emotion record
+          ▼
+┌────────────────────┐
+│ EduMoodSessionStats│
+│ ─ Stores all rows  │
+│ ─ Aggregates data  │
+│ ─ Converts to DF   │
+└─────────┬──────────┘
+          │ Pandas DataFrame
+          ▼
+┌────────────────────┐
+│     Streamlit UI   │
+│ ─ Metrics          │
+│ ─ Charts           │
+│ ─ Tables           │
+└────────────────────┘
+```
 
-8. Preprocess the face image for emotion detection using the `deepface` library's built-in preprocessing function.
+---
 
-9. Make predictions for the emotions using the pre-trained emotion detection model provided by the `deepface` library.
+## 📌 4. Technologies Used
 
-10. Retrieve the index of the predicted emotion and map it to the corresponding emotion label.
+| Component            | Purpose                               |
+| -------------------- | ------------------------------------- |
+| **Python 3.9+**      | Core development language             |
+| **Streamlit**        | Interactive dashboard UI              |
+| **streamlit-webrtc** | Real-time webcam streaming            |
+| **DeepFace**         | Pre-trained emotion recognition model |
+| **Pandas**           | Data storage & analysis               |
+| **Altair**           | Visualization                         |
+| **OpenCV**           | Frame processing                      |
 
-11. Draw a rectangle around the detected face and label it with the predicted emotion using `cv2.rectangle()` and `cv2.putText()`.
+---
 
-12. Display the resulting frame with the labeled emotion using `cv2.imshow()`.
+## 📌 5. Emotion Model (DeepFace)
 
-13. If the 'q' key is pressed, exit the loop.
+EduMood relies on **DeepFace’s built-in CNN expression model**, originally trained on **FER-2013**, to classify seven basic emotions:
 
-14. Release the video capture and close all windows using `cap.release()` and `cv2.destroyAllWindows()`.
+* happy
+* sad
+* angry
+* surprise
+* neutral
+* disgust
+* fear
 
-![image](https://github.com/manish-9245/Facial-Emotion-Recognition-using-OpenCV-and-Deepface/assets/69393822/57c41270-7575-4bc7-ae7a-99d67239a5ab)
+### Processing pipeline inside EduMood:
 
+1. Detect a face
+2. Crop the region of interest
+3. Resize to 48×48
+4. Pass through DeepFace model
+5. Receive emotion probabilities
+6. Select the highest-scoring label
+
+> No retraining or fine-tuning was done — the system uses the model exactly as provided.
+
+---
+
+## 📌 6. Data Strategy
+
+EduMood follows a structured data-handling approach:
+
+* Uses a **pre-trained** model instead of custom training
+* Generates a **session-level log** of all detected emotions
+* Each processed frame corresponds to one row in the internal DataFrame
+* Summaries are computed using aggregation (sum/mean)
+* The system imitates the data-handling strategy seen in Kevin’s project
+
+This ensures transparency and proper documentation for AI lifecycle reporting.
+
+---
+
+## 📌 7. Key Features
+
+* 🔵 **Real-time emotion recognition**
+* 📊 **Live dashboard analytics**
+* 🧠 **Session accumulation** (every detection recorded)
+* 🎚 **Frame sampling** (analyze every N frames to reduce latency)
+* 🪞 **Mirror-mode** (camera flipped horizontally)
+* 📈 **Bar charts, line charts, and KPI metrics**
+* 🎯 **Lightweight design suitable for classrooms and demos**
+
+---
+
+## 📌 8. Project Structure
+
+Recommended clean project folder after removing unnecessary files:
+
+```
+EduMood/
+│
+├── app.py                     # Streamlit dashboard
+├── edumood_recognizer.py     # Recognition + session stats
+├── requirements.txt
+├── README.md                 # This documentation
+├── LICENSE                   # License file
+│
+└── assets/ (optional)        # Images / logos
+```
+
+---
+
+## 📌 9. Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 📌 10. Running the Application
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## 📌 11. Credits & References
+
+This project integrates and refers to the following:
+
+* DeepFace library (Serengil et al.)
+* FER-2013 dataset (ICML 2013)
+* Conceptual inspiration from Kevin Aguirre’s **Facial Emotion Recognition App**
+* Streamlit official documentation
+* streamlit-webrtc official documentation
+
+All external components are used under their respective licenses.
+
+---
+
+## 📌 12. License
+
+The project is distributed for **academic and educational use only**.
+Commercial use is not allowed unless a commercial license is obtained.
+See the full terms in the **LICENSE** file.
 
 

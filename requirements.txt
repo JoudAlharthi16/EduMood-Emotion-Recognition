@@ -1,3 +1,9 @@
+streamlit
+streamlit-webrtc
 opencv-python
 deepface
 tf_keras
+numpy
+pandas
+altair
+av

@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# OS Files
+.DS_Store
+
+# Streamlit + WebRTC cache
+*.log
+
+# Videos, recordings
+*.mp4
+*.avi
+
+# DeepFace weights (تنزل تلقائياً، لا ترفعينها)
+*.h5
